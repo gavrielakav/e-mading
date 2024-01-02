@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>JeWePe e-mading</title>
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+        <!-- Font Awesome icons (free version)-->
+        <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+        <!-- Google fonts-->
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
+        <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="css/styles4.css" rel="stylesheet" />
+    </head>
+    <body id="page-top">
+        <!-- Navigation-->
+        <nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top" id="mainNav">
+            <div class="container">
+                <a class="navbar-brand" href="#page-top">JeWePe</a>
+                <button class="navbar-toggler text-uppercase font-weight-bold bg-primary text-white rounded" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    Menu
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="index.html">Home</a></li>
+                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="e-mading.html">e-mading</a></li>
+                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="index.html#contact">Contact</a></li>
+                        <li class="nav-item mx-0 mx-lg-1" id="loginNavItem">
+                            <a id="loginButton" class="nav-link py-3 px-0 px-lg-3 rounded-pill bg-primary text-white" href="#login" data-logged-in="false">Admin</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Article List Section -->
+        <div id="articleContainer" class="container-2">
+            <h2 class="font-weight-bold">List Artikel</h2>
+            <!-- Articles will be dynamically added here -->
+        </div>
+    
+        <div id="articleModal" class="modal">
+            <div class="modal-content">
+                <span class="close-button" onclick="closeModal()">&times;</span>
+                <h2 id="modalTitle"></h2>
+                <img id="modalImage" src="" alt="Article Image">
+                <p id="modalContent"></p>
+            </div>
+        </div>        
+
+        <!-- Footer-->
+        <footer class="footer text-center">
+            <div class="container">
+                <div class="row">
+                    <!-- Footer Location-->
+                    <div class="col-lg-4 mb-5 mb-lg-0">
+                        <h4 class="text-uppercase mb-4">Location</h4>
+                        <p class="lead mb-0">
+                            Jl. Margonda Raya
+                            <br />
+                            No.101
+                        </p>
+                    </div>
+                    <!-- Footer Social Icons-->
+                    <div class="col-lg-4 mb-5 mb-lg-0">
+                        <h4 class="text-uppercase mb-4">Around the Web</h4>
+                        <a class="btn btn-outline-light btn-social mx-1" href="#!"><i class="fab fa-fw fa-facebook-f"></i></a>
+                        <a class="btn btn-outline-light btn-social mx-1" href="#!"><i class="fab fa-fw fa-twitter"></i></a>
+                        <a class="btn btn-outline-light btn-social mx-1" href="#!"><i class="fab fa-fw fa-linkedin-in"></i></a>
+                        <a class="btn btn-outline-light btn-social mx-1" href="#!"><i class="fab fa-fw fa-dribbble"></i></a>
+                    </div>
+                    <!-- Footer About Text-->
+                    <div class="col-lg-4">
+                        <h4 class="text-uppercase mb-4">About E-mading</h4>
+                        <p class="lead mb-0">
+                            E-mading: Informal, online platform for casual sharing and engaging discussions
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!-- Copyright Section-->
+        <div class="copyright py-4 text-center text-white">
+            <div class="container"><small>Copyright &copy; Rere Ananda Sitompul 2023</small></div>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Core theme JS-->
+        <script src="js/scripts.js"></script>
+        <script src="js/articles.js"></script>
+        <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+        <!-- * *                               SB Forms JS                               * *-->
+        <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
+        <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+        <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+        <!-- JavaScript to toggle Log In / Log Out based on login status -->
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                // Initial fetch on page load
+                fetchArticles();
+            });
+        
+            function fetchArticles() {
+                // Retrieve articles from localStorage
+                var articles = JSON.parse(localStorage.getItem('articlesForEMading')) || [];
+        
+                // Update the articles display
+                updateArticleDisplay(articles);
+            }
+        
+            function updateArticleDisplay(articles) {
+                var articleContainer = document.getElementById('articleContainer');
+                articleContainer.innerHTML = '';
+        
+                articles.forEach((article) => {
+                    // Create a card for each article
+                    var card = document.createElement('div');
+                    card.classList.add('article-card');
+        
+                    // Add image and title to the card
+                    card.innerHTML = `
+                        <img src="${article.image}" alt="Article Image">
+                        <h3>${article.title}</h3>
+                    `;
+        
+                    // Add a click event to show detailed information when the card is clicked
+                    card.addEventListener('click', function () {
+                        showDetailedArticle(article);
+                    });
+        
+                    // Append the card to the container
+                    articleContainer.appendChild(card);
+                });
+            }
+        
+            function showDetailedArticle(article) {
+                var modal = document.getElementById('articleModal');
+                var modalTitle = document.getElementById('modalTitle');
+                var modalContent = document.getElementById('modalContent');
+                var modalImage = document.getElementById('modalImage');
+        
+                // Set the modal content based on the clicked article
+                modalTitle.innerText = article.title;
+                modalContent.innerText = article.content;
+                modalImage.src = article.image;
+        
+                // Display the modal
+                modal.style.display = 'block';
+            }
+        
+            function closeModal() {
+                // Close the modal when the close button is clicked
+                var modal = document.getElementById('articleModal');
+                modal.style.display = 'none';
+            }
+        </script>
+        <script>
+            // Simulate a variable representing the login status
+            var isLoggedIn = false;
+        
+            // Function to update the button text based on the login status
+            function updateLoginButton() {
+                var loginButton = document.getElementById('loginButton');
+                var loginNavItem = document.getElementById('loginNavItem');
+        
+                if (isLoggedIn) {
+                    loginButton.innerText = 'Log Out';
+                    loginNavItem.classList.remove('disabled'); // Optional: Remove 'disabled' styling for a logged-in state
+                } else {
+                    loginButton.innerText = 'Admin';
+                    loginNavItem.classList.add('disabled'); // Optional: Add 'disabled' styling for a logged-out state
+                }
+            }
+        
+            // Initial update on page load
+            updateLoginButton();
+        
+            // Event listener for toggling the login status (you may replace this with your actual login logic)
+            loginButton.addEventListener('click', function () {
+                // If not logged in, redirect to the login page
+                if (!isLoggedIn) {
+                    window.location.href = 'login.html';
+                } else {
+                    // For simplicity, let's toggle the login status on button click
+                    isLoggedIn = !isLoggedIn;
+                    // Update the button text
+                    updateLoginButton();
+                }
+            });
+        
+            // Event listener to show/hide the button on scroll
+            window.addEventListener('scroll', function () {
+                var loginNavItem = document.getElementById('loginNavItem');
+                if (window.scrollY > 50) {
+                    loginNavItem.style.display = 'inline-block';
+                } else {
+                    loginNavItem.style.display = 'none';
+                }
+            });
+        </script>
+    </body>
+</html>
